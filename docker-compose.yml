@@ -1,0 +1,27 @@
+version: "3.9"
+
+services:
+  ingredient-service:
+    build: ./ingredient-service
+    container_name: ingredient-service
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./ingredient-service/data:/app/data
+
+  recipe-service:
+    build: ./recipe-service
+    container_name: recipe-service
+    ports:
+      - "5001:5001"
+    volumes:
+      - ./recipe-service/data:/app/data
+
+  frontend:
+    build: ./frontend
+    container_name: ingredient-recipe-frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      - ingredient-service
+      - recipe-service
